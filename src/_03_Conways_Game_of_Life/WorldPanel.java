@@ -115,36 +115,51 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 		repaint();
 	}
 	
+	public boolean isAvailable(int x, int y)
+	{
+	    try
+	    {
+	        if (cells[x][y].isAlive == true)
+	        {
+	            return true;
+	        }
+	    }
+	    catch (IndexOutOfBoundsException ex)
+	    {
+	    }
+	    return false;
+	}
 	//9. Complete the method.
 	//   It returns an int of 8 or less based on how many
 	//   living neighbors there are of the 
 	//   cell identified by x and y
 	public int getLivingNeighbors(int x, int y){
 		int count = 0;
-		if(cells[x-1][y-1].isAlive == true) {
+		if(isAvailable(x-1, y-1) == true) {
 			count++;
 		}
-		if(cells[x][y-1].isAlive == true) {
+		if(isAvailable(x, y-1) == true) {
 			count++;
 		}
-		if(cells[x+1][y-1].isAlive == true) {
+		if(isAvailable(x+1, y-1) == true) {
 			count++;
 		}
-		if(cells[x-1][y].isAlive == true) {
+		if(isAvailable(x-1, y) == true) {
 			count++;
 		}
-		if(cells[x+1][y].isAlive == true) {
+		if(isAvailable(x+1, y) == true) {
 			count++;
 		}
-		if(cells[x-1][y+1].isAlive == true) {
+		if(isAvailable(x-1, y+1) == true) {
 			count++;
 		}
-		if(cells[x][y+1].isAlive == true) {
+		if(isAvailable(x, y+1) == true) {
 			count++;
 		}
-		if(cells[x+1][y+1].isAlive == true) {
+		if(isAvailable(x+1, y+1) == true) {
 			count++;
 		}
+		
 		return count;
 	}
 
