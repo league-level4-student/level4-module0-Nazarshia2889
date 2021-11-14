@@ -42,56 +42,80 @@
 package extras.the_wrong_way_cow;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TheWrongWayCow {
 
     public static int[] findWrongWayCow(final char[][] field) {
         // Fill in the code to return the x,y coordinate position of the
         // head (letter 'c') of the wrong way cow!
-    	int oneWay = 0;
-    	int anotherWay = 0;
-    	int count = 0;
-    	int oneX = 0;
-    	int oneY = 0;
-    	int anotherX = 0;
-    	int anotherY = 0;
+    	int x = 0;
+    	int y = 0;
+    	String current = "";
     	int[] xy = new int[2];
-        for(int i = 0;i < field.length;i++) {
+    	int left = 0;
+    	int right = 0;
+    	int down = 0;
+    	int up = 0;
+    	HashMap<String, int[]> coordinates = new HashMap<String, int[]>();
+    	int direction = 0;
+    	for(int i = 0;i < field.length;i++) {
+        	for(int j = 0;j < field[i].length-2;j++) {
+        		if(field[i][j] == 'c' && field[i][j+1] == 'o' && field[i][j+2] == 'w') {
+        			int[] coord = new int[2];
+        			coord[0] = j;
+        			coord[1] = i;
+        			coordinates.put("left", coord);
+        			left++;
+        		}
+        		else if(field[i][j] == 'w' && field[i][j+1] == 'o' && field[i][j+2] == 'c') {
+        			int[] coord = new int[2];
+        			coord[0] = j+2;
+        			coord[1] = i;
+        			coordinates.put("right", coord);
+        			right++;
+        			
+        		}
+        	}
+        }
+    	
+    	
+    	for(int i = 0;i < field.length-2;i++) {
         	for(int j = 0;j < field[i].length;j++) {
-        		if(field[i][j] == 'c') {
-        			try {
-	        			if(field[i][j+1] == 'o' && field[i][j+2] == 'w') {
-	        				oneWay++;
-	        				oneX = j;
-	        				oneY = i;
-	        			}
-	        			else {
-	        				anotherWay++;
-	        				anotherX = j;
-	        				anotherY = i;
-	        			}
-        			}
-        			catch (Exception e) {
-        				anotherWay++;
-        				anotherX = j;
-        				anotherY = i;
-        			}
-        			if(oneWay >= 1 && anotherWay >= 1) {
-        				if(oneWay > anotherWay) {
-        					xy[0] = anotherX;
-        					xy[1] = anotherY;
-        					break;
-        				}
-        				else {
-        					xy[0] = oneX;
-        					xy[1] = oneY;
-        					break;
-        				}
-        			}
+        		if(field[i][j] == 'c' && field[i+1][j] == 'o' && field[i+2][j] == 'w') {
+        			int[] coord = new int[2];
+        			coord[0] = j;
+        			coord[1] = i;
+        			coordinates.put("up", coord);
+        			up++;
+        		}
+        		else if(field[i][j] == 'w' && field[i+1][j] == 'o' && field[i+2][j] == 'c') {
+        			int[] coord = new int[2];
+        			coord[0] = j;
+        			coord[1] = i+2;
+        			coordinates.put("down", coord);
+        			down++;
         		}
         		
         	}
-        }
-        return xy;
+    	}
+    	if(left == 1) {
+    		return coordinates.get("left");
+    	}
+    	else if(right == 1) {
+    		return coordinates.get("right");
+    	}
+    	else if(up == 1) {
+    		return coordinates.get("up");
+    	}
+    	else if(down == 1) {
+    		return coordinates.get("down");
+    	}
+    	int[] random = new int[1];
+    	random[0] = -1;
+    	return random; 
+    	
+
     }
 }
